@@ -1,7 +1,5 @@
 {
     "references": [
-        { "path": "packages/nouns-api" },
-        { "path": "packages/nouns-assets" },
         { "path": "packages/nouns-bots" },
         { "path": "packages/nouns-contracts" },
         { "path": "packages/nouns-sdk" },
