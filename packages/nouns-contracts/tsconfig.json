@@ -9,10 +9,5 @@
     "./abi/**/*.json",
     "./files/*.json"
   ],
-  "files": ["./hardhat.config.ts"],
-  "references": [
-    {
-      "path": "../nouns-assets/tsconfig.build.json"
-    }
-  ]
+  "files": ["./hardhat.config.ts"]
 }
