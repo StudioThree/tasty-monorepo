@@ -6,7 +6,7 @@ import { useAuctionStore } from '../store/auctionStore';
 const BLOCKS_PER_DAY = 6_500;
 
 const ChainSubscriber: React.FC = () => {
-  // const dispatch = useAppDispatch();
+  const { setFullAuction, appendBid } = useAuctionStore.getState();
 
   const loadState = async () => {
     const wsProvider = new providers.WebSocketProvider(config.app.wsRpcUri);
@@ -19,6 +19,7 @@ const ChainSubscriber: React.FC = () => {
     // const extendedFilter = nounsAuctionHouseContract.filters.AuctionExtended(null, null);
     // const createdFilter = nounsAuctionHouseContract.filters.AuctionCreated(null, null, null);
     // const settledFilter = nounsAuctionHouseContract.filters.AuctionSettled(null, null, null);
+
     const processBidFilter = async (
       nounId: BigNumberish,
       sender: string,
@@ -26,11 +27,9 @@ const ChainSubscriber: React.FC = () => {
       extended: boolean,
       event: any,
     ) => {
-      // const timestamp = (await event.getBlock()).timestamp;
-      // const transactionHash = event.transactionHash;
-      // dispatch(
-      //   appendBid(reduxSafeBid({ nounId, sender, value, extended, transactionHash, timestamp })),
-      // );
+      const timestamp = (await event.getBlock()).timestamp;
+      const transactionHash = event.transactionHash;
+      appendBid({ nounId, sender, value, extended, transactionHash, timestamp });
     };
     // const processAuctionCreated = (
     //   nounId: BigNumberish,
@@ -54,7 +53,7 @@ const ChainSubscriber: React.FC = () => {
 
     // Fetch the current auction
     const currentAuction = await nounsAuctionHouseContract.auction();
-    useAuctionStore.getState().setFullAuction(currentAuction);
+    setFullAuction(currentAuction);
     // dispatch(setFullAuction(reduxSafeAuction(currentAuction)));
     // dispatch(setLastAuctionNounId(currentAuction.nounId.toNumber()));
 
