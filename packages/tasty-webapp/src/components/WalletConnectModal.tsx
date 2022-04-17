@@ -5,13 +5,15 @@ import clsx from 'clsx';
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
-import { TrezorConnector } from '@web3-react/trezor-connector';
+// import { TrezorConnector } from '@web3-react/trezor-connector';
 import { FortmaticConnector } from '@web3-react/fortmatic-connector';
 import config, { CHAIN_ID } from '../config';
 import classes from './WalletConnectModal.module.css';
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
-import { LedgerConnector } from '@web3-react/ledger-connector';
+// import { LedgerConnector } from '@web3-react/ledger-connector';
+
+// There is a problem with the dependency of Ledger and Treor, @0x, which blocks builds.
 
 const WalletConnectModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => {
   const { activate, active, error } = useWeb3React();
@@ -83,7 +85,7 @@ const WalletConnectModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) 
         }}
         walletType={WALLET_TYPE.brave}
       />
-      <WalletButton
+      {/* <WalletButton
         onClick={() => {
           const ledger = new LedgerConnector({
             chainId: supportedChainIds[0],
@@ -92,8 +94,8 @@ const WalletConnectModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) 
           activate(ledger);
         }}
         walletType={WALLET_TYPE.ledger}
-      />
-      <WalletButton
+      /> */}
+      {/* <WalletButton
         onClick={() => {
           const trezor = new TrezorConnector({
             chainId: CHAIN_ID,
@@ -104,7 +106,7 @@ const WalletConnectModal: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) 
           activate(trezor);
         }}
         walletType={WALLET_TYPE.trezor}
-      />
+      /> */}
       <div
         className={clsx(classes.clickable, classes.walletConnectData)}
         onClick={() => {
