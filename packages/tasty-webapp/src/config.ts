@@ -1,5 +1,5 @@
 import { getContractAddressesForChainOrThrow } from '@nouns/sdk';
-import { ChainId } from '@usedapp/core';
+import { ChainId } from './types';
 
 interface AppConfig {
   jsonRpcUri: string;
@@ -8,11 +8,9 @@ interface AppConfig {
   enableHistory: boolean;
 }
 
-type SupportedChains = ChainId.Rinkeby | ChainId.Mainnet | ChainId.Hardhat;
+type SupportedChains = ChainId.Mainnet | ChainId.Rinkeby | ChainId.Hardhat;
 
-export const CHAIN_ID: SupportedChains = parseInt(
-  process.env.REACT_APP_CHAIN_ID ?? ChainId.Rinkeby.toString(),
-);
+export const CHAIN_ID: SupportedChains = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1');
 
 export const ETHERSCAN_API_KEY = process.env.REACT_APP_ETHERSCAN_API_KEY ?? '';
 

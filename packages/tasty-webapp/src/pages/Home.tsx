@@ -1,59 +1,31 @@
-// import Auction from '../components/Auction';
-// import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { setOnDisplayAuctionNounId } from '../../state/slices/onDisplayAuction';
-// import { push } from 'connected-react-router';
-// import { nounPath } from '../../utils/history';
-// import useOnDisplayAuction from '../../wrappers/onDisplayAuction';
-// import { useEffect } from 'react';
 import { BigNumber } from 'ethers';
 import { useAuctionStore } from '../store/auctionStore';
 import dayjs from 'dayjs';
 import { BidEvent } from '../types';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { ethers } from 'ethers';
+import WalletConnectModal from '../components/WalletConnectModal';
+import { useWeb3React } from '@web3-react/core';
 
 const sortBids = (bids: BidEvent[]): BidEvent[] =>
   [...bids].sort((a, b) => b.timestamp - a.timestamp);
 
 export default function Home() {
-  console.log('home');
-  // const { initialAuctionId } = props;
+  const [showModal, setShowModal] = useState(false);
   const state = useAuctionStore(state => state);
   const bids = useAuctionStore(state => state.bids);
+  const { account, deactivate } = useWeb3React();
 
   const sortedBids = useMemo(() => sortBids(bids), [bids]);
-  console.log(state);
-  // const onDisplayAuction = useOnDisplayAuction();
-  // const lastAuctionNounId = useAppSelector(state => state.onDisplayAuction.lastAuctionNounId);
-
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   if (!lastAuctionNounId) return;
-
-  //   if (initialAuctionId !== undefined) {
-  //     // handle out of bounds noun path ids
-  //     if (initialAuctionId > lastAuctionNounId || initialAuctionId < 0) {
-  //       dispatch(setOnDisplayAuctionNounId(lastAuctionNounId));
-  //       dispatch(push(nounPath(lastAuctionNounId)));
-  //     } else {
-  //       if (onDisplayAuction === undefined) {
-  //         // handle regular noun path ids on first load
-  //         dispatch(setOnDisplayAuctionNounId(initialAuctionId));
-  //       }
-  //     }
-  //   } else {
-  //     // no noun path id set
-  //     if (lastAuctionNounId) {
-  //       dispatch(setOnDisplayAuctionNounId(lastAuctionNounId));
-  //     }
-  //   }
-  // }, [lastAuctionNounId, dispatch, initialAuctionId, onDisplayAuction]);
-
-  // return <Auction auction={onDisplayAuction} />;
 
   return (
     <div>
+      {account ? (
+        <button onClick={deactivate}>DISCONNECT</button>
+      ) : (
+        <button onClick={() => setShowModal(true)}>Connect</button>
+      )}
+      {showModal && <WalletConnectModal onDismiss={() => setShowModal(false)} />}
       <h1>Home</h1>
       <p style={{ color: 'black' }}>
         Current noun id ={' '}

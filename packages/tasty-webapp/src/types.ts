@@ -1,5 +1,11 @@
 import { BigNumber, BigNumberish } from 'ethers';
 
+export enum ChainId {
+  Mainnet = 1,
+  Rinkeby = 4,
+  Hardhat = 31337,
+}
+
 export interface Auction {
   amount: BigNumber;
   bidder: string;
